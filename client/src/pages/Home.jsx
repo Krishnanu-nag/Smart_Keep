@@ -7,7 +7,7 @@ const Home = () => {
     <div className="home-container">
       <header className="hero-section">
         <div className="hero-content">
-          <h1>GoalTrack</h1>
+          <h1>Smart Keep</h1>
           <p className="tagline">Achieve more together with your team</p>
           <div className="cta-buttons">
             <Link to="/register" className="btn primary">Get Started</Link>
@@ -20,7 +20,7 @@ const Home = () => {
       </header>
 
       <section className="features-section">
-        <h2>Why Choose GoalTrack?</h2>
+        <h2>Why Choose Smart Keep?</h2>
         <div className="features-grid">
           <div className="feature-card">
             <div className="icon">👥</div>
