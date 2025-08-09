@@ -1,11 +1,15 @@
 import React, { useEffect } from "react";
-import { jwtDecode } from 'jwt-decode';
+import { jwtDecode } from "jwt-decode";
+import axios from "axios";
+import { useNavigate } from "react-router-dom";
 
 const GoogleAuth = () => {
+  const navigate = useNavigate();
+
   useEffect(() => {
     /* global google */
     google.accounts.id.initialize({
-      client_id: import.meta.env.VITE_GOOGLE_CLIENT_ID, 
+      client_id: import.meta.env.VITE_GOOGLE_CLIENT_ID,
       callback: handleCredentialResponse,
     });
 
@@ -15,13 +19,27 @@ const GoogleAuth = () => {
     );
   }, []);
 
-  function handleCredentialResponse(response) {
-    // console.log("JWT ID Token:", response.credential);
-    const decoded = jwtDecode(response.credential);
-    console.log(decoded)
-    console.log("Name",decoded.name);
-    console.log("Email",decoded.email);
-    // You can decode it with jwt-decode to get user details
+  async function handleCredentialResponse(response) {
+    try {
+      // Optional: decode just for logging
+      const decoded = jwtDecode(response.credential);
+      console.log("Google User:", decoded);
+
+      // Send credential to backend
+      const res = await axios.post(
+        "http://localhost:5001/api/google-login",
+        { credential: response.credential }
+      );
+
+      // Store JWT + user in localStorage
+      localStorage.setItem("token", res.data.token);
+      localStorage.setItem("user", JSON.stringify(res.data.user));
+
+      // Redirect
+      navigate("/welcome");
+    } catch (error) {
+      console.error("Google login failed", error);
+    }
   }
 
   return (
@@ -32,6 +50,3 @@ const GoogleAuth = () => {
 };
 
 export default GoogleAuth;
-
-
-

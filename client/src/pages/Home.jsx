@@ -1,8 +1,18 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import '../styles/Home.css';
 
 const Home = () => {
+  const navigate = useNavigate();
+  const token = localStorage.getItem('token');
+
+  const handleGetStartedClick = (e) => {
+    if (token) {
+      e.preventDefault();
+      navigate('/welcome');
+    }
+  };
+
   return (
     <div className="home-container">
       <header className="hero-section">
@@ -10,8 +20,16 @@ const Home = () => {
           <h1>Smart Keep</h1>
           <p className="tagline">Achieve more together with your team</p>
           <div className="cta-buttons">
-            <Link to="/register" className="btn primary">Get Started</Link>
-            <Link to="/login" className="btn secondary">Login</Link>
+            <Link 
+              to="/register" 
+              className="btn primary" 
+              onClick={handleGetStartedClick}
+            >
+              Get Started
+            </Link>
+            {!token && (
+              <Link to="/login" className="btn secondary">Login</Link>
+            )}
           </div>
         </div>
         <div className="hero-image">
