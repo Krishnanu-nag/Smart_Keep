@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import '../../styles/Auth.css';
 import Navbar from '../Navbar';
+import GoogleAuth from './GoogleAuth';
 
 const Register = () => {
     const [name, setName] = useState('');
@@ -20,10 +21,6 @@ const Register = () => {
         console.log('Registration submitted', { name, email, password });
     };
 
-    const handleGoogleRegister = () => {
-        // Add your Google registration logic here
-        console.log('Register with Google');
-    };
 
     return (
         <>
@@ -84,14 +81,7 @@ const Register = () => {
                 
                 <div className="auth-divider">or</div>
                 
-                <button type="button" className="google-auth-button" onClick={handleGoogleRegister}>
-                    <img
-                        src="https://upload.wikimedia.org/wikipedia/commons/5/53/Google_%22G%22_Logo.svg"
-        
-                        className="google-icon"
-                    />
-                    Continue with Google
-                </button>
+                <GoogleAuth />
                 
                 <div className="auth-link">
                     Already have an account? <Link to="/login">Login</Link>

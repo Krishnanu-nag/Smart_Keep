@@ -1,0 +1,235 @@
+/* Dashboard.css */
+
+.dashboard-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 20px;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  color: #2d3748;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+.dashboard-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 20px 0;
+  border-bottom: 1px solid #e2e8f0;
+  margin-bottom: 30px;
+}
+
+.dashboard-header h1 {
+  font-size: 24px;
+  color: #1a365d;
+  margin: 0;
+}
+
+.header-actions {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+}
+
+.notification-btn, .profile-btn {
+  background: none;
+  border: none;
+  cursor: pointer;
+  position: relative;
+}
+
+.notification-btn .icon {
+  font-size: 20px;
+}
+
+.notification-btn .badge {
+  position: absolute;
+  top: -5px;
+  right: -5px;
+  background: #e53e3e;
+  color: white;
+  border-radius: 50%;
+  width: 18px;
+  height: 18px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 12px;
+}
+
+.profile-btn .avatar {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+.dashboard-content {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 30px;
+}
+
+.student-profile {
+  background: white;
+  border-radius: 10px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+  padding: 25px;
+}
+
+.profile-header {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  margin-bottom: 25px;
+}
+
+.profile-avatar {
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 3px solid #4299e1;
+}
+
+.profile-info h2 {
+  margin: 0;
+  font-size: 22px;
+  color: #2d3748;
+}
+
+.profile-info .college {
+  margin: 5px 0 0;
+  color: #718096;
+  font-size: 16px;
+}
+
+.profile-details {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 20px;
+}
+
+.detail-card {
+  background: #f7fafc;
+  border-radius: 8px;
+  padding: 20px;
+  border-left: 4px solid #4299e1;
+}
+
+.detail-card h3 {
+  margin-top: 0;
+  margin-bottom: 15px;
+  color: #2b6cb0;
+  font-size: 18px;
+}
+
+.detail-item {
+  margin-bottom: 12px;
+  display: flex;
+}
+
+.detail-item .label {
+  font-weight: 600;
+  color: #4a5568;
+  width: 80px;
+}
+
+.detail-item .value {
+  color: #718096;
+  flex: 1;
+}
+
+.coming-soon {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  min-height: 150px;
+  background: #ebf8ff;
+}
+
+.placeholder {
+  color: #4299e1;
+  font-style: italic;
+}
+
+.quick-actions {
+  background: white;
+  border-radius: 10px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+  padding: 25px;
+}
+
+.quick-actions h2 {
+  margin-top: 0;
+  margin-bottom: 20px;
+  font-size: 20px;
+  color: #2d3748;
+}
+
+.action-buttons {
+  display: flex;
+  gap: 15px;
+  flex-wrap: wrap;
+}
+
+.action-btn {
+  background: #ebf8ff;
+  border: none;
+  border-radius: 6px;
+  padding: 12px 20px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  color: #2b6cb0;
+  font-weight: 500;
+}
+
+.action-btn:hover {
+  background: #bee3f8;
+  transform: translateY(-2px);
+}
+
+.action-icon {
+  font-size: 18px;
+}
+
+.dashboard-footer {
+  margin-top: 40px;
+  padding-top: 20px;
+  border-top: 1px solid #e2e8f0;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  color: #718096;
+  font-size: 14px;
+}
+
+.footer-links {
+  display: flex;
+  gap: 15px;
+}
+
+.footer-links a {
+  color: #718096;
+  text-decoration: none;
+}
+
+.footer-links a:hover {
+  color: #4299e1;
+}
+
+@media (max-width: 768px) {
+  .profile-details {
+    grid-template-columns: 1fr;
+  }
+  
+  .action-buttons {
+    flex-direction: column;
+  }
+}

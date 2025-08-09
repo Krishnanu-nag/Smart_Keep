@@ -2,6 +2,11 @@ import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import '../../styles/Auth.css';
 import Navbar from '../Navbar';
+import GoogleAuth from './GoogleAuth';
+
+
+
+
 
 const Login = () => {
     const [email, setEmail] = useState('');
@@ -14,10 +19,7 @@ const Login = () => {
         console.log('Login submitted', { email, password });
     };
 
-    const handleGoogleLogin = () => {
-        // Add your Google login logic here
-        console.log('Login with Google');
-    };
+  
 
     return (
         <>
@@ -57,14 +59,9 @@ const Login = () => {
                 </button>
                 
                 <div className="auth-divider">or</div>
-                
-                <button type="button" className="google-auth-button" onClick={handleGoogleLogin}>
-                    <img
-                        src="https://upload.wikimedia.org/wikipedia/commons/5/53/Google_%22G%22_Logo.svg"
-                        className="google-icon"
-                    />
-                    Continue with Google
-                </button>
+    
+
+                <GoogleAuth />
                 
                 <div className="auth-link">
                     Don't have an account? <Link to="/register">Register</Link>

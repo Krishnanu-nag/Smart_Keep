@@ -2,3 +2,4 @@ react-router-dom
 axios
 redux
 react-redux
+jwt-decode
