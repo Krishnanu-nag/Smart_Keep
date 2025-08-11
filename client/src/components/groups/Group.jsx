@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import axios from "axios";
 import { useParams, useNavigate } from "react-router-dom";
 import Navbar from "../Navbar.jsx";
-import "../../styles/Group.css"
+import "../../styles/Group.css";
 
 const Group = () => {
   const { groupId } = useParams();
@@ -17,14 +17,18 @@ const Group = () => {
       setError(null);
       try {
         const token = localStorage.getItem("token");
-        const res = await axios.get(`http://localhost:5001/api/groups/${groupId}`, {
-          headers: { Authorization: `Bearer ${token}` },
-        });
+        const res = await axios.get(
+          `http://localhost:5001/api/groups/${groupId}`,
+          {
+            headers: { Authorization: `Bearer ${token}` },
+          }
+        );
         setGroup(res.data);
       } catch (err) {
         console.error("Error fetching group:", err);
         setError(
-          err.response?.data?.message || "An error occurred while fetching the group."
+          err.response?.data?.message ||
+            "An error occurred while fetching the group."
         );
         setGroup(null);
       } finally {
@@ -49,16 +53,8 @@ const Group = () => {
 
         <h2 className="group-title">{group.name}</h2>
 
-        <p className="invite-link">
-          Invite Link:{" "}
-          <a
-            href={`http://localhost:5173/join/${group.inviteLink}`}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="link"
-          >
-            {`http://localhost:5173/join/${group.inviteLink}`}
-          </a>
+        <p className="invite-code">
+        <b> Group Code: </b><p>{group.inviteLink}</p>
         </p>
 
         <h3 className="members-title">Members:</h3>
@@ -81,7 +77,7 @@ const Group = () => {
             navigate(`/groups/${groupId}/chat`);
           }}
         >
-         Chat
+          Chat
         </button>
       </div>
     </>

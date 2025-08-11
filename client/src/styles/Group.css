@@ -41,6 +41,7 @@
 
 /* Titles */
 .group-title {
+    text-align: center;
   margin-bottom: 0.8rem;
   font-weight: 700;
   font-size: 2rem;

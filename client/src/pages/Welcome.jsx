@@ -17,8 +17,33 @@ const WelcomePage = () => {
   const [joining, setJoining] = useState(false);
   const [showCreateForm, setShowCreateForm] = useState(false);
   const [showJoinForm, setShowJoinForm] = useState(false);
+  const [userName, setUserName] = useState("");
 
   useEffect(() => {
+    // Fetch user info
+    const fetchUser = async () => {
+      try {
+        const token = localStorage.getItem("token");
+        if (!token) {
+          setUserName("");
+          return;
+        }
+        const res = await axios.get("http://localhost:5001/api/me", {
+          headers: { Authorization: `Bearer ${token}` },
+        });
+        console.log("User data from /api/me:", res.data);
+        const str=res.data.name.split(/\s+/);  //displaying only the first name
+        const firstName=str[0];
+        setUserName(firstName || "");
+      } catch (err) {
+        console.error("Error fetching user info:", err);
+        setUserName("");
+      }
+    };
+
+    fetchUser();
+
+    // Fetch groups (your existing logic)
     const fetchGroups = async () => {
       try {
         const token = localStorage.getItem("token");
@@ -126,13 +151,14 @@ const WelcomePage = () => {
       <Navbar />
       <div className="welcome-container">
         <header className="welcome-header">
-          <h1>Welcome!</h1>
+          <h1>Welcome! {userName}</h1>
           <p className="welcome-subtext">
             Create or join a group to get started
           </p>
         </header>
 
         <main className="group-content">
+         
           <div className="group-header">
             <h2>Your Groups</h2>
 
@@ -181,13 +207,13 @@ const WelcomePage = () => {
                   setShowCreateForm(false);
                 }}
               >
-                🔗 Join
+                🔗Group Code
               </button>
             ) : (
               <div className="inline-form">
                 <input
                   type="text"
-                  placeholder="Paste invite link..."
+                  placeholder="Group Code here..."
                   value={inviteLink}
                   onChange={(e) => setInviteLink(e.target.value)}
                   className="inline-input"
