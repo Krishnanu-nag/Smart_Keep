@@ -5,6 +5,7 @@ import Register from './components/auth/Register';
 import About from './pages/About';
 import WelcomePage from './pages/Welcome';
 import Dashboard from './components/dashboard/Dashboard';
+import Group from '../src/components/groups/Group.jsx'
 
 function App() {
   return (
@@ -15,6 +16,7 @@ function App() {
       <Route path="/about" element={<About />} />
       <Route path="/welcome" element={<WelcomePage />} />
       <Route path="/dashboard" element={<Dashboard />} />
+      <Route path="/group/:groupId" element={<Group />} /> {/* <-- New route */}
     </Routes>
   );
 }

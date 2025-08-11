@@ -5,3 +5,5 @@ jsonwebtoken
 express 
 mongoose
 google-auth-library
+uuid
+nodemon
