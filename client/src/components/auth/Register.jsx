@@ -28,7 +28,7 @@ const Register = () => {
     setRedirecting(false);
 
     try {
-      const res = await axios.post("http://localhost:5001/api/register", {
+      const res = await axios.post(`${import.meta.env.VITE_FRONTEND_URI}/api/register`, {
         name,
         email,
         password,

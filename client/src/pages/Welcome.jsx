@@ -28,7 +28,7 @@ const WelcomePage = () => {
           setUserName("");
           return;
         }
-        const res = await axios.get("http://localhost:5001/api/me", {
+        const res = await axios.get(`${import.meta.env.VITE_FRONTEND_URI}/api/me`, {
           headers: { Authorization: `Bearer ${token}` },
         });
         // console.log("User data from /api/me:", res.data);
@@ -55,7 +55,7 @@ const WelcomePage = () => {
         }
 
         const res = await axios.get(
-          "http://localhost:5001/api/groups/my-groups",
+          `${import.meta.env.VITE_FRONTEND_URI}/api/groups/my-groups`,
           {
             headers: { Authorization: `Bearer ${token}` },
           }
@@ -88,7 +88,7 @@ const WelcomePage = () => {
       }
 
       const res = await axios.post(
-        "http://localhost:5001/api/groups",
+       `${import.meta.env.VITE_FRONTEND_URI}/api/groups`,
         { name: newGroupName },
         { headers: { Authorization: `Bearer ${token}` } }
       );
@@ -125,7 +125,7 @@ const WelcomePage = () => {
       }
 
       const res = await axios.post(
-        `http://localhost:5001/api/groups/join/${inviteCode}`,
+        `${import.meta.env.VITE_FRONTEND_URI}/api/groups/join/${inviteCode}`,
         {},
         { headers: { Authorization: `Bearer ${token}` } }
       );

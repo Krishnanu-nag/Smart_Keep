@@ -23,7 +23,6 @@ const app = express();
 
 // Middleware
 app.use(cors({
-  origin: 'http://localhost:5173',
   credentials: true
 }));
 app.use(express.json());
@@ -329,7 +328,7 @@ app.get('/api/groups/:groupId/messages', authenticateToken, async (req, res) => 
 
 
 // ===================== START SERVER ===================== //
-const PORT = process.env.PORT || 5001;
+const PORT = process.env.PORT;
 server.listen(PORT, () => {
   console.log(`HTTP and WebSocket server running on port ${PORT}`);
 });

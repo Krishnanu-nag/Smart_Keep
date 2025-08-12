@@ -19,7 +19,7 @@ const Login = () => {
 
         try {
             const res = await axios.post(
-                'http://localhost:5001/api/login',
+                `${import.meta.env.VITE_FRONTEND_URI}/api/login`,
                 { email, password },
                 { withCredentials: true }
             );
@@ -30,7 +30,7 @@ const Login = () => {
             localStorage.setItem('token', res.data.token);
             localStorage.setItem('user', JSON.stringify(res.data.user));
 
-            console.log('Login success:', res.data);
+            // console.log('Login success:', res.data);
 
             // Redirect after storing
             navigate('/welcome');

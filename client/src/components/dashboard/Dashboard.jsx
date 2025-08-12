@@ -26,7 +26,7 @@ const Dashboard = () => {
         }
 
         // ✅ Fetch user profile
-        const resUser = await axios.get("http://localhost:5001/api/me", {
+        const resUser = await axios.get(`${import.meta.env.VITE_FRONTEND_URI}/api/me`, {
           headers: { Authorization: `Bearer ${token}` },
         });
 
@@ -34,7 +34,7 @@ const Dashboard = () => {
 
         // ✅ Fetch groups for logged-in user
         const resGroups = await axios.get(
-          "http://localhost:5001/api/groups/my-groups",
+        `${import.meta.env.VITE_FRONTEND_URI}/api/groups/my-groups`,
           {
             headers: { Authorization: `Bearer ${token}` },
           }

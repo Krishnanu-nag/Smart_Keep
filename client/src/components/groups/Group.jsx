@@ -18,7 +18,7 @@ const Group = () => {
       try {
         const token = localStorage.getItem("token");
         const res = await axios.get(
-          `http://localhost:5001/api/groups/${groupId}`,
+          `${import.meta.env.VITE_FRONTEND_URI}/api/groups/${groupId}`,
           {
             headers: { Authorization: `Bearer ${token}` },
           }

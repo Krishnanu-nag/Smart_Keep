@@ -23,13 +23,14 @@ const GoogleAuth = () => {
     try {
       // Optional: decode just for logging
       const decoded = jwtDecode(response.credential);
-      console.log("Google User:", decoded);
+      // console.log("Google User:", decoded);
 
       // Send credential to backend
-      const res = await axios.post(
-        "http://localhost:5001/api/google-login",
-        { credential: response.credential }
-      );
+     const res = await axios.post(
+  `${import.meta.env.VITE_FRONTEND_URI}/api/google-login`,
+  { credential: response.credential }
+);
+
 
       // Store JWT + user in localStorage
       localStorage.setItem("token", res.data.token);
