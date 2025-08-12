@@ -24,5 +24,4 @@ dist-ssr
 *.sw?
 
 # Node.js dependencies
-node_modules/
 .env
