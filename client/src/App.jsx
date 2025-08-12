@@ -5,9 +5,13 @@ import Register from './components/auth/Register';
 import About from './pages/About';
 import WelcomePage from './pages/Welcome';
 import Dashboard from './components/dashboard/Dashboard';
-import Group from '../src/components/groups/Group.jsx'
+import Group from './components/groups/Group.jsx';
+import Chatroom from './components/groups/ChatRoom.jsx'; 
 
 function App() {
+  // Ideally get username from auth context/local storage or pass as prop
+  const username = localStorage.getItem('username') || 'Guest';
+
   return (
     <Routes>
       <Route path="/" element={<Home />} />
@@ -16,7 +20,11 @@ function App() {
       <Route path="/about" element={<About />} />
       <Route path="/welcome" element={<WelcomePage />} />
       <Route path="/dashboard" element={<Dashboard />} />
-      <Route path="/group/:groupId" element={<Group />} /> {/* <-- New route */}
+      <Route path="/group/:groupId" element={<Group />} />
+      <Route
+        path="/group/:groupId/chat"
+        element={<Chatroom username={username} />}
+      />
     </Routes>
   );
 }

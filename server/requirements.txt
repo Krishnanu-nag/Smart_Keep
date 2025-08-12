@@ -7,3 +7,4 @@ mongoose
 google-auth-library
 uuid
 nodemon
+ws

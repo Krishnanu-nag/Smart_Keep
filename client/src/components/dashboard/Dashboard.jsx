@@ -1,42 +1,55 @@
-import React, { useEffect, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
-import axios from 'axios'; // axios to make requests
-import '../../styles/Dashboard.css';
-import Navbar from '../Navbar';
+import React, { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
+import axios from "axios";
+import "../../styles/Dashboard.css";
+import Navbar from "../Navbar";
 
 const Dashboard = () => {
   const navigate = useNavigate();
-  const [student, setStudent] = useState(null);  // state for user info
+  const [student, setStudent] = useState(null);
+  const [groups, setGroups] = useState([]);
   const [loading, setLoading] = useState(true);
 
   const handleLogout = () => {
-    localStorage.removeItem('token');
-    localStorage.removeItem('user');
-    navigate('/');
+    localStorage.removeItem("token");
+    localStorage.removeItem("user");
+    navigate("/");
   };
 
   useEffect(() => {
-    const fetchUser = async () => {
+    const fetchData = async () => {
       try {
-        const token = localStorage.getItem('token');
+        const token = localStorage.getItem("token");
         if (!token) {
-          navigate('/login'); // redirect if no token
+          navigate("/login");
           return;
         }
 
-        const res = await axios.get('http://localhost:5001/api/me', {
-          headers: { Authorization: `Bearer ${token}` }
+        // ✅ Fetch user profile
+        const resUser = await axios.get("http://localhost:5001/api/me", {
+          headers: { Authorization: `Bearer ${token}` },
         });
 
-        setStudent(res.data); // set user info from backend
+        setStudent(resUser.data);
+
+        // ✅ Fetch groups for logged-in user
+        const resGroups = await axios.get(
+          "http://localhost:5001/api/groups/my-groups",
+          {
+            headers: { Authorization: `Bearer ${token}` },
+          }
+        );
+
+        setGroups(resGroups.data || []);
+
         setLoading(false);
       } catch (error) {
-        console.error('Failed to fetch user info:', error);
-        handleLogout(); // logout on error
+        console.error("Failed to fetch dashboard data:", error);
+        handleLogout();
       }
     };
 
-    fetchUser();
+    fetchData();
   }, [navigate]);
 
   if (loading) {
@@ -49,28 +62,28 @@ const Dashboard = () => {
       <div className="dashboard-container">
         <header
           className="dashboard-header"
-          style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}
+          style={{
+            display: "flex",
+            justifyContent: "space-between",
+            alignItems: "center",
+          }}
         >
           <h1>Student Dashboard</h1>
-          <div className="header-actions" style={{ display: 'flex', alignItems: 'center', gap: '15px' }}>
-            <button className="notification-btn">
-              <span className="icon">🔔</span>
-              <span className="badge">2</span>
-            </button>
-            <button className="profile-btn">
-              <img src={student.picture || 'https://randomuser.me/api/portraits/men/32.jpg'} alt="Profile" className="avatar" />
-            </button>
+          <div
+            className="header-actions"
+            style={{ display: "flex", alignItems: "center", gap: "15px" }}
+          >
             <button
               onClick={handleLogout}
               style={{
-                cursor: 'pointer',
-                padding: '6px 12px',
-                backgroundColor: '#d9534f',
-                border: 'none',
-                borderRadius: '4px',
-                color: 'white',
-                fontWeight: 'bold',
-                fontSize: '14px'
+                cursor: "pointer",
+                padding: "6px 12px",
+                backgroundColor: "#d9534f",
+                border: "none",
+                borderRadius: "4px",
+                color: "white",
+                fontWeight: "bold",
+                fontSize: "14px",
               }}
             >
               Logout
@@ -81,10 +94,13 @@ const Dashboard = () => {
         <main className="dashboard-content">
           <section className="student-profile">
             <div className="profile-header">
-              <img src={student.picture || 'https://randomuser.me/api/portraits/men/32.jpg'} alt="Student" className="profile-avatar" />
+              <img
+                src={student.picture ? student.picture : "images/user.png"}
+                className="profile-avatar"
+              />
+
               <div className="profile-info">
                 <h2>{student.name}</h2>
-                <p className="college"> {/* you can add this field in your user schema if needed */} </p>
               </div>
             </div>
 
@@ -95,22 +111,29 @@ const Dashboard = () => {
                   <span className="label">Email:</span>
                   <span className="value">{student.email}</span>
                 </div>
-                {/* Add phone if you store it */}
+              </div>
+
+              <div className="detail-card">
+                <h3>Groups currenty presnt in :</h3>
+                {groups.length > 0 ? (
+                  <ul className="groups-list">
+                    {groups.map((group, index) => (
+                      <li key={group._id || index} className="group-item">
+                        {group.name || "Unnamed Group"}
+                      </li>
+                    ))}
+                  </ul>
+                ) : (
+                  <p className="placeholder">No groups joined yet</p>
+                )}
               </div>
 
               <div className="detail-card coming-soon">
                 <h3>Academic Information</h3>
                 <p className="placeholder">Feature coming soon</p>
               </div>
-
-              <div className="detail-card coming-soon">
-                <h3>Course Schedule</h3>
-                <p className="placeholder">Feature coming soon</p>
-              </div>
             </div>
           </section>
-
-          {/* rest of dashboard content */}
         </main>
 
         <footer className="dashboard-footer">

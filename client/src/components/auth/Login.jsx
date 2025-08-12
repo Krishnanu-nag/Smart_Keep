@@ -32,7 +32,7 @@ const Login = () => {
 
             console.log('Login success:', res.data);
 
-            // ✅ Redirect only after storing data
+            // Redirect after storing
             navigate('/welcome');
 
         } catch (err) {
@@ -48,10 +48,12 @@ const Login = () => {
                     <h2 className="auth-title">Login</h2>
 
                     <div className="auth-input-group">
+                        <label htmlFor="email" className="auth-label">Email</label>
                         <input
+                            id="email"
                             type="email"
                             className="auth-input"
-                            placeholder="Email"
+                            placeholder="Enter your email"
                             value={email}
                             onChange={(e) => setEmail(e.target.value)}
                             required
@@ -59,10 +61,12 @@ const Login = () => {
                     </div>
 
                     <div className="auth-input-group">
+                        <label htmlFor="password" className="auth-label">Password</label>
                         <input
+                            id="password"
                             type="password"
                             className="auth-input"
-                            placeholder="Password"
+                            placeholder="Enter your password"
                             value={password}
                             onChange={(e) => setPassword(e.target.value)}
                             required
@@ -76,12 +80,12 @@ const Login = () => {
                         Login
                     </button>
 
-                    <div className="auth-divider">or</div>
+                    <div className="auth-divider"><span>or</span></div>
 
                     <GoogleAuth />
 
                     <div className="auth-link">
-                        Don't have an account? <Link to="/register">Register</Link>
+                        Don’t have an account? <Link to="/register">Register</Link>
                     </div>
                 </form>
             </div>

@@ -1,15 +1,15 @@
-import React from 'react';
-import { Link, useNavigate } from 'react-router-dom';
-import '../styles/Home.css';
+import React from "react";
+import { Link, useNavigate } from "react-router-dom";
+import "../styles/Home.css";
 
 const Home = () => {
   const navigate = useNavigate();
-  const token = localStorage.getItem('token');
+  const token = localStorage.getItem("token");
 
   const handleGetStartedClick = (e) => {
     if (token) {
       e.preventDefault();
-      navigate('/welcome');
+      navigate("/welcome");
     }
   };
 
@@ -20,20 +20,22 @@ const Home = () => {
           <h1>Smart Keep</h1>
           <p className="tagline">Achieve more together with your team</p>
           <div className="cta-buttons">
-            <Link 
-              to="/register" 
-              className="btn primary" 
+            <Link
+              to="/register"
+              className="btn primary"
               onClick={handleGetStartedClick}
             >
               Get Started
             </Link>
             {!token && (
-              <Link to="/login" className="btn secondary">Login</Link>
+              <Link to="/login" className="btn secondary">
+                Login
+              </Link>
             )}
           </div>
         </div>
         <div className="hero-image">
-          <img src="/images/goal-illustration.svg" alt="Team setting goals" />
+          <img src="images\logo-white.png" alt="logo" />
         </div>
       </header>
 
@@ -57,18 +59,6 @@ const Home = () => {
           </div>
         </div>
       </section>
-
-      <section className="demo-section">
-        <h2>See It In Action</h2>
-        <div className="demo-container">
-          <img src="/images/app-screenshot.png" alt="App preview" className="demo-image" />
-        </div>
-      </section>
-
-      <footer className="home-footer">
-        <p>Ready to boost your productivity?</p>
-        <Link to="/register" className="btn primary">Sign Up Free</Link>
-      </footer>
     </div>
   );
 };

@@ -31,9 +31,9 @@ const WelcomePage = () => {
         const res = await axios.get("http://localhost:5001/api/me", {
           headers: { Authorization: `Bearer ${token}` },
         });
-        console.log("User data from /api/me:", res.data);
-        const str=res.data.name.split(/\s+/);  //displaying only the first name
-        const firstName=str[0];
+        // console.log("User data from /api/me:", res.data);
+        const str = res.data.name.split(/\s+/); //displaying only the first name
+        const firstName = str[0];
         setUserName(firstName || "");
       } catch (err) {
         console.error("Error fetching user info:", err);
@@ -151,89 +151,83 @@ const WelcomePage = () => {
       <Navbar />
       <div className="welcome-container">
         <header className="welcome-header">
-          <h1>Welcome! {userName}</h1>
+          <h1>Welcome{userName && `, ${userName}`}</h1>
           <p className="welcome-subtext">
             Create or join a group to get started
           </p>
         </header>
 
         <main className="group-content">
-         
           <div className="group-header">
             <h2>Your Groups</h2>
+            <div className="action-buttons">
+              {!showCreateForm && !showJoinForm && (
+                <>
+                  <button
+                    className="create-join-btn"
+                    onClick={() => {
+                      setShowCreateForm(true);
+                      setShowJoinForm(false);
+                    }}
+                  >
+                    Create Group
+                  </button>
+                  <button
+                    className="create-join-btn"
+                    onClick={() => {
+                      setShowJoinForm(true);
+                      setShowCreateForm(false);
+                    }}
+                  >
+                    Join Group
+                  </button>
+                </>
+              )}
+            </div>
+          </div>
 
-            {/* Create button */}
-            {!showCreateForm ? (
-              <button
-                className="plus-btn"
-                title="Create New Group"
-                onClick={() => {
-                  setShowCreateForm(true);
-                  setShowJoinForm(false);
-                }}
-              >
-                ➕
-              </button>
-            ) : (
-              <div className="inline-form">
-                <input
-                  type="text"
-                  placeholder="Enter group name..."
-                  value={newGroupName}
-                  onChange={(e) => setNewGroupName(e.target.value)}
-                  className="inline-input"
-                />
-                <button onClick={handleCreateGroup} disabled={creating}>
-                  {creating ? "Creating..." : "Create"}
+          {(showCreateForm || showJoinForm) && (
+            <div className="form-container">
+              <input
+                type="text"
+                className="form-input"
+                placeholder={showCreateForm ? "Group name" : "Invite code"}
+                value={showCreateForm ? newGroupName : inviteLink}
+                onChange={(e) =>
+                  showCreateForm
+                    ? setNewGroupName(e.target.value)
+                    : setInviteLink(e.target.value)
+                }
+              />
+              <div className="form-actions">
+                <button
+                  className="btn btn-primary"
+                  onClick={showCreateForm ? handleCreateGroup : handleJoinGroup}
+                  disabled={showCreateForm ? creating : joining}
+                >
+                  {showCreateForm
+                    ? creating
+                      ? "Creating..."
+                      : "Create"
+                    : joining
+                    ? "Joining..."
+                    : "Join"}
                 </button>
                 <button
+                  className="btn btn-outline"
                   onClick={() => {
                     setShowCreateForm(false);
-                    setNewGroupName("");
-                  }}
-                >
-                  Cancel
-                </button>
-              </div>
-            )}
-
-            {/* Join button */}
-            {!showJoinForm ? (
-              <button
-                className="join-btn"
-                title="Join via Invite Link"
-                onClick={() => {
-                  setShowJoinForm(true);
-                  setShowCreateForm(false);
-                }}
-              >
-                🔗Group Code
-              </button>
-            ) : (
-              <div className="inline-form">
-                <input
-                  type="text"
-                  placeholder="Group Code here..."
-                  value={inviteLink}
-                  onChange={(e) => setInviteLink(e.target.value)}
-                  className="inline-input"
-                />
-                <button onClick={handleJoinGroup} disabled={joining}>
-                  {joining ? "Joining..." : "Join"}
-                </button>
-                <button
-                  onClick={() => {
                     setShowJoinForm(false);
+                    setNewGroupName("");
                     setInviteLink("");
                   }}
                 >
                   Cancel
                 </button>
               </div>
-            )}
-          </div>
+            </div>
+          )}
 
-          {/* Groups list */}
           {loading ? (
             <p className="loading-text">Loading your groups...</p>
           ) : error ? (
@@ -242,7 +236,10 @@ const WelcomePage = () => {
             <ul className="group-list">
               {groups.map((group) => (
                 <li key={group._id} className="group-item">
-                  <Link to={`/group/${group._id}`}>{group.name}</Link>
+                  <Link to={`/group/${group._id}`} className="group-link">
+                    <span className="group-icon">#</span>
+                    {group.name}
+                  </Link>
                 </li>
               ))}
             </ul>

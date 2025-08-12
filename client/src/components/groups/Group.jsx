@@ -53,9 +53,10 @@ const Group = () => {
 
         <h2 className="group-title">{group.name}</h2>
 
-        <p className="invite-code">
-        <b> Group Code: </b><p>{group.inviteLink}</p>
-        </p>
+        <div className="invite-code">
+          <b>Group Code:</b>
+          <p>{group.inviteLink}</p>
+        </div>
 
         <h3 className="members-title">Members:</h3>
         <ul className="members-list">
@@ -73,8 +74,7 @@ const Group = () => {
         <button
           className="btn chat-btn"
           onClick={() => {
-            // Navigate to a chat page or open a chat modal (adjust as needed)
-            navigate(`/groups/${groupId}/chat`);
+            navigate(`/group/${groupId}/chat`);
           }}
         >
           Chat

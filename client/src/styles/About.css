@@ -1,152 +1,189 @@
-/* Base Styles */
 .about-container {
-  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-  color: #2c3e50;
-  line-height: 1.6;
-  max-width: 1200px;
+  max-width: 1000px;
   margin: 0 auto;
-  padding: 0 20px;
+  padding: 2rem 1rem;
+  font-family: 'Segoe UI', system-ui, sans-serif;
+  color: #333;
 }
 
-/* Hero Section */
 .about-hero {
   text-align: center;
-  padding: 5rem 0;
-  background: linear-gradient(135deg, #4285f4 0%, #34a853 100%);
-  color: white;
-  border-radius: 0 0 20px 20px;
   margin-bottom: 3rem;
 }
 
 .about-hero h1 {
-  font-size: 3rem;
-  margin-bottom: 1rem;
+  font-size: 2.5rem;
+  font-weight: 600;
+  margin-bottom: 0.5rem;
 }
 
 .hero-subtitle {
-  font-size: 1.2rem;
-  opacity: 0.9;
+  font-size: 1.1rem;
+  color: #666;
 }
 
-/* Content Cards */
+.about-content {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+}
+
 .about-card {
-  background: white;
-  padding: 2rem;
+  background: #fafafa;
+  padding: 1.5rem;
   border-radius: 10px;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
-  margin-bottom: 2rem;
+  border: 1px solid #eee;
 }
 
 .about-card h2 {
-  color: #4285f4;
-  margin-bottom: 1rem;
+  font-size: 1.5rem;
+  margin-bottom: 0.75rem;
 }
 
-/* Values Section */
+.about-card p {
+  color: #555;
+  line-height: 1.6;
+}
+
 .about-values {
-  margin: 4rem 0;
+  background: #fff;
+  padding: 1.5rem;
+  border-radius: 10px;
+  border: 1px solid #eee;
+}
+
+.about-values h2 {
+  text-align: center;
+  margin-bottom: 1.5rem;
 }
 
 .values-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-  gap: 2rem;
-  margin-top: 2rem;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 1.5rem;
 }
 
 .value-item {
-  background: white;
-  padding: 2rem;
-  border-radius: 10px;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
   text-align: center;
+  padding: 1rem;
+  background: #fafafa;
+  border-radius: 8px;
+  border: 1px solid #eee;
+  transition: background 0.2s ease;
+}
+
+.value-item:hover {
+  background: #f0f0f0;
 }
 
 .value-icon {
-  font-size: 2.5rem;
-  margin-bottom: 1rem;
+  font-size: 2rem;
+  margin-bottom: 0.5rem;
 }
 
 .value-item h3 {
   margin-bottom: 0.5rem;
-  color: #2c3e50;
+  font-size: 1.1rem;
 }
 
-/* Team Section */
+.value-item p {
+  color: #666;
+  font-size: 0.95rem;
+}
+
 .about-team {
-  margin: 4rem 0;
+  background: #fff;
+  padding: 1.5rem;
+  border-radius: 10px;
+  border: 1px solid #eee;
+}
+
+.about-team h2 {
+  text-align: center;
+  margin-bottom: 1.5rem;
 }
 
 .team-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-  gap: 2rem;
-  margin-top: 2rem;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: 1.5rem;
 }
 
 .team-member {
-  background: white;
-  padding: 2rem;
-  border-radius: 10px;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
   text-align: center;
+  background: #fafafa;
+  padding: 1rem;
+  border-radius: 8px;
+  border: 1px solid #eee;
+  transition: transform 0.2s ease;
+}
+
+.team-member:hover {
+  transform: translateY(-3px);
 }
 
 .member-avatar {
   font-size: 2.5rem;
-  margin-bottom: 1rem;
+  margin-bottom: 0.5rem;
 }
 
 .team-member h3 {
-  margin-bottom: 0.5rem;
-  color: #2c3e50;
+  margin-bottom: 0.25rem;
+  font-size: 1rem;
 }
 
 .team-member p {
-  color: #7f8c8d;
   font-size: 0.9rem;
+  color: #777;
 }
 
-/* CTA Section */
-.about-cta {
-  text-align: center;
-  padding: 4rem 0;
-  background-color: #f8f9fa;
-  border-radius: 20px;
-  margin: 3rem 0;
-}
-
-.about-cta h2 {
-  margin-bottom: 1.5rem;
-  font-size: 2rem;
-}
-
-.cta-button {
-  background-color: #4285f4;
-  color: white;
-  border: none;
-  padding: 1rem 2rem;
-  font-size: 1rem;
-  border-radius: 5px;
-  cursor: pointer;
-  transition: background-color 0.3s;
-}
-
-.cta-button:hover {
-  background-color: #3367d6;
-}
-
-/* Responsive Design */
+/* ------------------------------
+   MEDIA QUERIES FOR RESPONSIVENESS
+   ------------------------------ */
 @media (max-width: 768px) {
   .about-hero h1 {
     font-size: 2rem;
   }
-  
+
   .hero-subtitle {
     font-size: 1rem;
   }
-  
-  .values-grid, .team-grid {
+
+  .about-card,
+  .about-values,
+  .about-team {
+    padding: 1rem;
+  }
+
+  .values-grid {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .team-grid {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+@media (max-width: 480px) {
+  .about-hero h1 {
+    font-size: 1.75rem;
+  }
+
+  .hero-subtitle {
+    font-size: 0.95rem;
+  }
+
+  .values-grid {
     grid-template-columns: 1fr;
+  }
+
+  .team-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .about-card,
+  .about-values,
+  .about-team {
+    padding: 0.85rem;
   }
 }

@@ -6,9 +6,16 @@ const jwt = require('jsonwebtoken');
 const { v4: uuidv4 } = require('uuid');
 const { OAuth2Client } = require("google-auth-library");
 
+
+
 const connectDB = require('./config/db');
 const User = require('./models/user');
 const Group = require('./models/group');
+
+const http = require('http');
+const url = require('url');
+const WebSocket = require('ws');
+
 
 connectDB();
 
@@ -43,14 +50,19 @@ app.get('/', (req, res) => {
 // ✅ Get current logged-in user
 app.get('/api/me', authenticateToken, async (req, res) => {
   try {
+    console.log('User ID from token:', req.user.id);
     const user = await User.findById(req.user.id).select('-password -__v');
-    if (!user) return res.status(404).json({ message: 'User not found' });
+    if (!user) {
+      console.log('User not found');
+      return res.status(404).json({ message: 'User not found' });
+    }
     res.json(user);
   } catch (error) {
     console.error('Error in /api/me:', error);
     res.status(500).json({ message: 'Server error' });
   }
 });
+
 
 // ✅ Register
 app.post('/api/register', async (req, res) => {
@@ -222,6 +234,102 @@ app.get('/api/groups/:groupId', authenticateToken, async (req, res) => {
 
 
 
+const server = http.createServer(app);
+
+// --- Setup WebSocket server ---
+const wss = new WebSocket.Server({ server });
+
+// Map to track clients by groupId
+const clientsByGroup = new Map();
+
+wss.on('connection', (ws, req) => {
+  // Parse groupId from query string
+  const parameters = url.parse(req.url, true);
+  const groupId = parameters.query.groupId;
+
+  if (!groupId) {
+    ws.close(1008, 'Missing groupId');
+    return;
+  }
+
+  // Add client to the group set
+  if (!clientsByGroup.has(groupId)) {
+    clientsByGroup.set(groupId, new Set());
+  }
+  clientsByGroup.get(groupId).add(ws);
+
+  console.log(`Client connected to group: ${groupId}`);
+
+  ws.on('message', async (message) => {
+    try {
+      const data = JSON.parse(message);
+
+      // Validate message structure
+      if (!data.groupId || !data.username || !data.text) {
+        console.error('Invalid message data', data);
+        return;
+      }
+
+      // Optional: Save message to DB (if you have a Message model)
+      const msgDoc = new Message({
+        groupId: data.groupId,
+        username: data.username,
+        text: data.text,
+        createdAt: data.createdAt || new Date(),
+      });
+      await msgDoc.save();
+
+      // Broadcast only to clients in the same group
+      const groupClients = clientsByGroup.get(data.groupId);
+      if (groupClients) {
+        groupClients.forEach(client => {
+          if (client.readyState === WebSocket.OPEN) {
+            client.send(JSON.stringify(data));
+          }
+        });
+      }
+    } catch (err) {
+      console.error('Error processing WS message:', err);
+    }
+  });
+
+  ws.on('close', () => {
+    console.log(`Client disconnected from group: ${groupId}`);
+    const groupClients = clientsByGroup.get(groupId);
+    if (groupClients) {
+      groupClients.delete(ws);
+      if (groupClients.size === 0) {
+        clientsByGroup.delete(groupId);
+      }
+    }
+  });
+});
+
+
+
+// In your backend (Express)
+const Message = require('./models/Message');  // Add this import
+
+app.get('/api/groups/:groupId/messages', authenticateToken, async (req, res) => {
+  try {
+    const messages = await Message.find({ groupId: req.params.groupId }).sort({ createdAt: 1 });
+    res.json(messages);
+  } catch (err) {
+    console.error('Error fetching messages:', err);  // This will print error on server console
+    res.status(500).json({ message: 'Server error' });
+  }
+});
+
+
+
+
+
+
+
+
+
 // ===================== START SERVER ===================== //
 const PORT = process.env.PORT || 5001;
-app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
+server.listen(PORT, () => {
+  console.log(`HTTP and WebSocket server running on port ${PORT}`);
+});
