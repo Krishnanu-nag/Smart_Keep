@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef } from "react";
 import { useParams } from "react-router-dom";
 import axios from "axios";
-import "../../styles/Chatroom.css";
+import "../../styles/ChatRoom.css";
 import { useNavigate } from "react-router-dom";
 
 const VITE_PORT = import.meta.env.VITE_PORT;
