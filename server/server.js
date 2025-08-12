@@ -23,6 +23,8 @@ const app = express();
 
 // Middleware
 app.use(cors({
+  // origin: 'http://localhost:5173',
+  origin: 'https://smart-keep-krishnanu-nag.netlify.app',
   credentials: true
 }));
 app.use(express.json());
@@ -328,7 +330,7 @@ app.get('/api/groups/:groupId/messages', authenticateToken, async (req, res) => 
 
 
 // ===================== START SERVER ===================== //
-const PORT = process.env.PORT;
+const PORT = process.env.PORT ;
 server.listen(PORT, () => {
   console.log(`HTTP and WebSocket server running on port ${PORT}`);
 });
