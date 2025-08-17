@@ -4,6 +4,7 @@ import '../styles/Navbar.css';
 
 const Navbar = () => {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [menuOpen, setMenuOpen] = useState(false);
 
   useEffect(() => {
     // Check if token exists in localStorage on mount
@@ -20,15 +21,29 @@ const Navbar = () => {
           </Link>
         </div>
 
-        <div className="navbar-links">
-          <Link to="/" className="navbar-link">Home</Link>
-          <Link to="/about" className="navbar-link">About Us</Link>
+        {/* Hamburger button */}
+        <div 
+          className={`hamburger ${menuOpen ? 'open' : ''}`} 
+          onClick={() => setMenuOpen(!menuOpen)}
+        >
+          <span></span>
+          <span></span>
+          <span></span>
+        </div>
 
-          {/* Conditionally render link */}
+        {/* Links */}
+        <div className={`navbar-links ${menuOpen ? 'active' : ''}`}>
+          <Link to="/" className="navbar-link" onClick={() => setMenuOpen(false)}>Home</Link>
+          <Link to="/about" className="navbar-link" onClick={() => setMenuOpen(false)}>About Us</Link>
+
           {isLoggedIn ? (
-            <Link to="/dashboard" className="navbar-link get-started">Dashboard</Link>
+            <Link to="/dashboard" className="navbar-link get-started" onClick={() => setMenuOpen(false)}>
+              Dashboard
+            </Link>
           ) : (
-            <Link to="/register" className="navbar-link get-started">Get Started</Link>
+            <Link to="/register" className="navbar-link get-started" onClick={() => setMenuOpen(false)}>
+              Get Started
+            </Link>
           )}
         </div>
       </div>

@@ -10,11 +10,15 @@
   box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
 }
 
+/* Header */
 .chat-header {
   background-color: #4a76a8;
   color: white;
   padding: 15px 20px;
   text-align: center;
+  display: flex;
+  align-items: center;
+  gap: 10px;
 }
 
 .chat-header h2 {
@@ -22,12 +26,13 @@
   font-size: 1.2rem;
 }
 
+/* Messages */
 .chat-messages {
   flex: 1;
   padding: 20px;
   overflow-y: auto;
   background-color: #e5ddd5;
-  background-image: url('https://web.whatsapp.com/img/bg-chat-tile-light_a4be512e7195b6b733d9110b408f075d.png');
+  background-image: url("https://web.whatsapp.com/img/bg-chat-tile-light_a4be512e7195b6b733d9110b408f075d.png");
   background-repeat: repeat;
   display: flex;
   flex-direction: column;
@@ -84,6 +89,7 @@
   margin-top: 3px;
 }
 
+/* Input area */
 .chat-input-area {
   display: flex;
   padding: 15px;
@@ -124,6 +130,7 @@
   stroke: white;
 }
 
+/* Date Separator */
 .date-separator {
   text-align: center;
   margin: 15px 0;
@@ -139,6 +146,7 @@
   border: 1px solid #ddd;
 }
 
+/* Back button */
 .back-button {
   background: white;
   border-radius: 10px;
@@ -146,7 +154,7 @@
   cursor: pointer;
   margin-right: 30px;
   color: #000000;
-  transition: color 0.2s ease;
+  transition: color 0.2s ease, background-color 0.2s ease;
 }
 
 .back-button:hover {
@@ -154,8 +162,55 @@
   background-color: #000000;
 }
 
-.chat-header {
-  display: flex;
-  align-items: center;
-  gap: 10px;
+/* Responsive Design */
+@media (max-width: 768px) {
+  .chatroom-container {
+    max-width: 100%;
+    border-radius: 0;
+  }
+
+  .chat-header {
+    padding: 12px;
+    font-size: 1rem;
+  }
+
+  .chat-messages {
+    padding: 12px;
+    gap: 8px;
+  }
+
+  .message-bubble {
+    max-width: 85%;
+    padding: 8px 12px;
+    font-size: 0.9rem;
+  }
+
+  .chat-input-area {
+    padding: 10px;
+  }
+
+  .chat-input-area input {
+    font-size: 0.9rem;
+    padding: 10px 12px;
+  }
+
+  .chat-input-area button {
+    width: 40px;
+    height: 40px;
+  }
+}
+
+@media (max-width: 480px) {
+  .chat-header h2 {
+    font-size: 1rem;
+  }
+
+  .message-bubble {
+    max-width: 90%;
+    font-size: 0.85rem;
+  }
+
+  .message-time {
+    font-size: 0.65rem;
+  }
 }

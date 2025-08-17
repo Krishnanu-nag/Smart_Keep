@@ -34,9 +34,13 @@ const Home = () => {
             )}
           </div>
         </div>
-        <div className="hero-image">
+        {/* <div className="hero-image">
           <img src="images\logo-white.png" alt="logo" />
+        </div>       Backslashes (\) can break image loading in React.   */}
+        <div className="hero-image">
+          <img src="images/logo-white.png" alt="logo" />
         </div>
+
       </header>
 
       <section className="features-section">

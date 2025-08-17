@@ -10,6 +10,7 @@ const Group = () => {
   const [group, setGroup] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  const [copied, setCopied] = useState(false);
 
   useEffect(() => {
     const fetchGroup = async () => {
@@ -39,6 +40,14 @@ const Group = () => {
     fetchGroup();
   }, [groupId]);
 
+  const handleCopy = () => {
+    if (group?.inviteLink) {
+      navigator.clipboard.writeText(group.inviteLink);
+      setCopied(true);
+      setTimeout(() => setCopied(false), 2000); // reset after 2s
+    }
+  };
+
   if (loading) return <p className="loading-text">Loading...</p>;
   if (error) return <p className="error-text">{error}</p>;
   if (!group) return <p className="error-text">Group not found</p>;
@@ -55,7 +64,12 @@ const Group = () => {
 
         <div className="invite-code">
           <b>Group Code:</b>
-          <p>{group.inviteLink}</p>
+          <div className="invite-flex">
+            <p>{group.inviteLink}</p>
+            <button className="btn copy-btn" onClick={handleCopy}>
+              {copied ? "Copied!" : "Copy"}
+            </button>
+          </div>
         </div>
 
         <h3 className="members-title">Members:</h3>

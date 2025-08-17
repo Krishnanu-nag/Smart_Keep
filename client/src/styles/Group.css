@@ -116,3 +116,28 @@
     gap: 0.3rem;
   }
 }
+
+.invite-code {
+  margin: 1rem 0;
+}
+
+.invite-flex {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.copy-btn {
+  background-color: #4285f4;
+  color: white;
+  border: none;
+  padding: 0.4rem 0.8rem;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  font-size: 0.9rem;
+}
+
+.copy-btn:hover {
+  background-color: #3367d6;
+}
