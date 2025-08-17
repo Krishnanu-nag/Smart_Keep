@@ -4,9 +4,9 @@ import axios from "axios";
 import "../../styles/ChatRoom.css";
 import { useNavigate } from "react-router-dom";
 
-const VITE_PORT = import.meta.env.VITE_PORT;
-const WEBSOCKET_URL = `ws://localhost:${VITE_PORT}`;
-const API_BASE_URL = `http://localhost:${VITE_PORT}/api`;
+// Read directly from VITE_ env variables
+const API_BASE_URL = `${import.meta.env.VITE_FRONTEND_URI}/api`;
+const WEBSOCKET_URL = import.meta.env.VITE_WS_URL;
 
 
 const Chatroom = () => {
