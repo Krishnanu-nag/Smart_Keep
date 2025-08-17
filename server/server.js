@@ -331,7 +331,7 @@ app.get('/api/groups/:groupId/messages', authenticateToken, async (req, res) => 
 
 
 // ===================== START SERVER ===================== //
-const PORT = process.env.PORT ;
+const PORT = process.env.PORT || 5001 ;
 server.listen(PORT, () => {
   console.log(`HTTP and WebSocket server running on port ${PORT}`);
 });
