@@ -1,10 +1,13 @@
 import React, { useState, useEffect, useRef } from "react";
-import { useParams, useNavigate } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import axios from "axios";
 import "../../styles/ChatRoom.css";
+import { useNavigate } from "react-router-dom";
 
-const API_BASE_URL = `${import.meta.env.VITE_BACKEND_URL}/api`;
-const WEBSOCKET_URL = import.meta.env.VITE_WS_URL;
+const VITE_PORT = import.meta.env.VITE_PORT;
+const WEBSOCKET_URL = `ws://localhost:${VITE_PORT}`;
+const API_BASE_URL = `http://localhost:${VITE_PORT}/api`;
+
 
 const Chatroom = () => {
   const { groupId } = useParams();
@@ -65,7 +68,6 @@ const Chatroom = () => {
   // Connect to WebSocket
   useEffect(() => {
     if (usernameLoading || !groupId) return;
-
     ws.current = new WebSocket(`${WEBSOCKET_URL}?groupId=${groupId}`);
 
     ws.current.onopen = () => {
@@ -140,17 +142,18 @@ const Chatroom = () => {
 
   return (
     <div className="chatroom-container">
-      <div className="chat-header">
-        <button
-          className="back-button"
-          onClick={() => navigate(`/group/${groupId}`)}
-          aria-label="Go back"
-        >
-          Back
-        </button>
-        <h2>{groupName}</h2>
-        {usernameLoading && <p>Loading user info...</p>}
-      </div>
+     <div className="chat-header">
+  <button
+    className="back-button"
+    onClick={() => navigate(`/group/${groupId}`)}
+    aria-label="Go back"
+  >
+    Back
+  </button>
+  <h2>{groupName}</h2>
+  {usernameLoading && <p>Loading user info...</p>}
+</div>
+
 
       <div className="chat-messages" ref={messagesContainerRef}>
         {messages.map((msg, i) => {
