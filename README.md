@@ -55,10 +55,3 @@ Built with the **MERN stack** and deployed on **Netlify**, it offers a **respons
 
 ---
 
-## 💻 Installation
-
-1. **Clone the repository**
-
-```bash
-git clone https://github.com/Krishnanu-nag/smart-keep.git
-cd smart-keep
