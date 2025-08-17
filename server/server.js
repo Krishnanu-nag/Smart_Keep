@@ -244,6 +244,7 @@ const wss = new WebSocket.Server({ server });
 const clientsByGroup = new Map();
 
 wss.on('connection', (ws, req) => {
+  console.log("New WebSocket client connected!");
   // Parse groupId from query string
   const parameters = url.parse(req.url, true);
   const groupId = parameters.query.groupId;
