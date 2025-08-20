@@ -22,9 +22,19 @@ connectDB();
 const app = express();
 
 // Middleware
+const allowedOrigins = [
+  "http://localhost:5173",
+  "https://smart-keep-krishnanu-nag.netlify.app"
+];
+
 app.use(cors({
-  // origin: 'http://localhost:5173',
-  origin: 'https://smart-keep-krishnanu-nag.netlify.app',
+  origin: function (origin, callback) {
+    if (!origin || allowedOrigins.includes(origin)) {
+      callback(null, true);
+    } else {
+      callback(new Error("Not allowed by CORS"));
+    }
+  },
   credentials: true
 }));
 app.use(express.json());
@@ -244,6 +254,7 @@ const wss = new WebSocket.Server({ server });
 const clientsByGroup = new Map();
 
 wss.on('connection', (ws, req) => {
+  console.log("New WebSocket client connected!");
   // Parse groupId from query string
   const parameters = url.parse(req.url, true);
   const groupId = parameters.query.groupId;
@@ -317,7 +328,7 @@ app.get('/api/groups/:groupId/messages', authenticateToken, async (req, res) => 
     res.json(messages);
   } catch (err) {
     console.error('Error fetching messages:', err);  // This will print error on server console
-    res.status(500).json({ message: 'Server error' });
+    res.status(500).json({ message: 'Server error' });``
   }
 });
 
@@ -330,7 +341,7 @@ app.get('/api/groups/:groupId/messages', authenticateToken, async (req, res) => 
 
 
 // ===================== START SERVER ===================== //
-const PORT = process.env.PORT ;
+const PORT = process.env.PORT || 5001 ;
 server.listen(PORT, () => {
   console.log(`HTTP and WebSocket server running on port ${PORT}`);
 });

@@ -78,8 +78,10 @@
 .hero-image img {
   max-width: 100%;
   height: auto;
-  max-height: 400px;
+  border-radius: 8px;
+  object-fit: contain; /* scales nicely without cropping */
 }
+
 
 /* Features Section */
 .features-section {
@@ -185,6 +187,8 @@
 }
 
 /* Responsive Design */
+
+/* Tablets and small laptops */
 @media (min-width: 768px) {
   .hero-section {
     flex-direction: row;
@@ -200,22 +204,50 @@
   }
 }
 
-@media (max-width: 600px) {
+/* Mobile devices */
+@media (max-width: 768px) {
+  .hero-section {
+    flex-direction: column-reverse;
+    align-items: center;
+    padding: 40px 20px;
+    gap: 20px;
+  }
+
+  .hero-image img {
+    max-height: 250px;
+    width: 80%;
+  }
+
   .hero-content h1 {
-    font-size: 2.5rem;
+    font-size: 2rem;
   }
 
   .tagline {
-    font-size: 1.25rem;
+    font-size: 1.1rem;
   }
 
   .cta-buttons {
     flex-direction: column;
-    align-items: center;
+    gap: 10px;
   }
 
   .btn {
+    width: 80%;
+  }
+}
+
+/* Smallest screens */
+@media (max-width: 400px) {
+  .hero-image img {
+    max-height: 180px;
     width: 100%;
-    text-align: center;
+  }
+
+  .hero-content h1 {
+    font-size: 1.75rem;
+  }
+
+  .tagline {
+    font-size: 1rem;
   }
 }
