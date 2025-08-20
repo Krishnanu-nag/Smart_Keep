@@ -25,4 +25,4 @@ dist-ssr
 
 # Node.js dependencies
 .env
-node
+node_modules
