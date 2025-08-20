@@ -1,5 +1,12 @@
 /* Auth.css */
 
+/* input forms shift righhwards causing overflow adding this prevent inpiut forms to overflow from parent div */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
 /* Container */
 .auth-container {
   min-height: 100vh;
